@@ -1,0 +1,6 @@
+
+processor:
+  attributesfilter:
+    drop:
+      - key: "aaaa"
+        value: "bbbb"
