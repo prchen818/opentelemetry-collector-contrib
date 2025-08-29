@@ -1,0 +1,16 @@
+dist:
+  name: final-collector
+  description: My Final Custom Collector, built the right way.
+  output_path: ./
+  otelcol_version: "0.130.1" # 我们使用一个稳定版本
+
+receivers:
+  - gomod: go.opentelemetry.io/collector/receiver/otlpreceiver v0.130.1
+
+processors:
+  # 这里我们依然声明需要这两个处理器
+  - gomod: go.opentelemetry.io/collector/processor/batchprocessor v0.130.0
+  - gomod: github.com/prchen818/opentelemetry-collector-contrib/processor/attributesfilterprocessor v0.130.1
+
+exporters:
+  - gomod: go.opentelemetry.io/collector/exporter/debugexporter v0.130.1

@@ -1,0 +1,30 @@
+receivers:
+  otlp:
+    protocols:
+      http:
+
+# 在这里分别定义两个处理器的配置
+processors:
+  # groupbytrace 的配置
+  groupbytrace:
+    wait_duration: 2s
+    num_traces: 1000
+
+  # 修改过的 tailsampling 的配置
+  tail_sampling:
+    sample_rate: 0.1         # 示例：采样 10% 的追踪
+    buffer_size: 4000        # 示例：在内存中缓存4000条追踪后进行一次批处理
+    pool_height: 1000        # 示例：用于异常检测的历史延迟池大小
+    combination_count: 100   # 示例：演化算法的组合数
+    decision_wait: 2s
+
+exporters:
+  debug:
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      # 这里定义了处理顺序：先 groupbytrace, 再 tailsampling
+      processors: [groupbytrace, tail_sampling]
+      exporters: [debug]
