@@ -4,15 +4,16 @@ dist:
   output_path: ./
   otelcol_version: "0.130.1" # 我们使用一个稳定版本
 
-#replaces:
-#  - github.com/prchen818/opentelemetry-collector-contrib/processor/attributesfilterprocessor => ../processor/attributesfilterprocessor
+replaces:
+  - github.com/prchen818/opentelemetry-collector-contrib/processor/attributesfilterprocessor => ./processor/attributesfilterprocessor
 
 receivers:
   - gomod: go.opentelemetry.io/collector/receiver/otlpreceiver v0.130.1
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/receiver/jaegerreceiver v0.133.0
 
 processors:
   - gomod: go.opentelemetry.io/collector/processor/batchprocessor v0.130.1
-  - gomod: github.com/prchen818/opentelemetry-collector-contrib/processor/attributesfilterprocessor v0.0.0
+  - gomod: github.com/prchen818/opentelemetry-collector-contrib/processor/attributesfilterprocessor v0.130.1
 
 exporters:
   - gomod: go.opentelemetry.io/collector/exporter/debugexporter v0.130.1

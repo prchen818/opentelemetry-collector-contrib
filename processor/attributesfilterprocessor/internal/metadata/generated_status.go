@@ -7,12 +7,10 @@ import (
 )
 
 var (
-	Type      = component.MustNewType("attributes")
-	ScopeName = "github.com/open-telemetry/opentelemetry-collector-contrib/processor/attributesprocessor"
+	Type      = component.MustNewType("attributesfilter")
+	ScopeName = "github.com/prchen818/opentelemetry-collector-contrib/processor/attributesfilterprocessor"
 )
 
 const (
 	TracesStability  = component.StabilityLevelBeta
-	MetricsStability = component.StabilityLevelBeta
-	LogsStability    = component.StabilityLevelBeta
 )

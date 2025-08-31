@@ -5,6 +5,7 @@ import (
 	"github.com/prchen818/opentelemetry-collector-contrib/processor/attributesfilterprocessor/internal/foreach"
 	"go.opentelemetry.io/collector/component"
 	"go.opentelemetry.io/collector/consumer"
+	"go.opentelemetry.io/collector/pdata/pcommon"
 	"go.opentelemetry.io/collector/pdata/ptrace"
 	"go.opentelemetry.io/collector/processor"
 	"go.uber.org/zap"
@@ -31,14 +32,15 @@ func newAttributesFilterProcessor(
 
 func (a *AttributesFilterProcessor) processTraces(ctx context.Context, td ptrace.Traces) (ptrace.Traces, error) {
 	rss := td.ResourceSpans()
-	foreach.SpansRemoveIf(rss, func(span ptrace.Span) bool {
+	foreach.SpansRemoveIf(rss, func(attrs pcommon.Map) bool {
 		for _, action := range a.config.Drop {
-			attrs := span.Attributes()
+			// if any one action matches, we save the span
 			if v, ok := attrs.Get(action.Key); ok && v.AsString() == action.Value {
-				return true
+				return false
 			}
 		}
-		return false
+		// drop the span if no action matches
+		return true
 	})
 	return td, nil
 }

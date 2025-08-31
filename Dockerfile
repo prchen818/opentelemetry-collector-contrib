@@ -24,5 +24,5 @@ COPY --from=builder /app/collector-dev .
 # 将您的配置文件也复制进去
 COPY config.yml .
 
-EXPOSE 4318
-ENTRYPOINT ["/app/final-collector", "--config=/app/config.yml"]
+EXPOSE 4317 4318 6831 6832
+ENTRYPOINT ["/app/collector-dev", "--config=/app/config.yml"]
